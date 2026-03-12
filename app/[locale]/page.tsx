@@ -1,4 +1,4 @@
-import Image from "next/image";
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import { Container } from "@/components/container";
 import { ExperienceItem } from "@/components/experience-item";
@@ -9,7 +9,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SkillBadge } from "@/components/skill-badge";
 import { getProjects } from "@/content/projects";
 import { getSiteContent, getUiCopy } from "@/content/site";
-import { localePath, requireLocale } from "@/lib/i18n";
+import { localePath, requireLocale, withBasePath } from "@/lib/i18n";
 
 export default async function HomePage({
   params
@@ -41,7 +41,14 @@ export default async function HomePage({
       <main>
         <section className="py-8 sm:py-12">
           <Container>
-            <div className="cascade-hero rounded-[2.5rem] border border-[color:rgba(255,255,255,0.18)] px-6 py-6 text-white shadow-[0_30px_90px_rgba(16,33,43,0.18)] sm:px-8 sm:py-8">
+            <div
+              className="cascade-hero rounded-[2.5rem] border border-[color:rgba(255,255,255,0.18)] px-6 py-6 text-white shadow-[0_30px_90px_rgba(16,33,43,0.18)] sm:px-8 sm:py-8"
+              style={
+                {
+                  "--hero-background": `linear-gradient(104deg, rgba(14, 37, 48, 0.62) 8%, rgba(19, 74, 95, 0.22) 40%, rgba(235, 248, 255, 0.06) 72%), linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(12, 26, 34, 0.16)), url("${withBasePath("/hero-moraine-lake.webp")}") center 58% / cover no-repeat`
+                } as CSSProperties
+              }
+            >
               <div className="grid gap-6 lg:grid-cols-[1.32fr_0.68fr] lg:items-end">
                 <div className="fade-rise">
                   {copy.hero.eyebrow ? (
@@ -74,13 +81,12 @@ export default async function HomePage({
                 </div>
                 <div className="fade-rise-delayed max-w-[22rem] justify-self-end rounded-[1.75rem] border border-white/14 bg-[color:rgba(15,45,58,0.16)] p-2.5 shadow-[0_20px_60px_rgba(8,14,18,0.16)] backdrop-blur-sm">
                   <div className="overflow-hidden rounded-[1.4rem] border border-white/12 bg-black/10">
-                    <Image
-                      src="/jordi-portrait.webp"
+                    <img
+                      src={withBasePath("/jordi-portrait.webp")}
                       alt="Jordi Granada Rubio on a snowy mountain ridge in Banff"
                       width={960}
                       height={1280}
                       className="h-[18rem] w-full object-cover object-[50%_58%] sm:h-[16rem] sm:object-[50%_66%] lg:h-[18rem] lg:object-[50%_62%] xl:h-[19rem] xl:object-[50%_60%]"
-                      priority
                     />
                   </div>
                   <div className="mt-2.5 rounded-[1.25rem] border border-white/12 bg-[color:rgba(12,36,48,0.34)] p-3.5">
