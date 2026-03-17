@@ -56,6 +56,7 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
     setTurnstileError("");
     setErrorMessage("");
 
@@ -96,7 +97,7 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
       setMessage("");
       setTurnstileToken("");
       setTurnstileResetKey((current) => current + 1);
-      event.currentTarget.reset();
+      form.reset();
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : copy.error);
       setStatus("error");
