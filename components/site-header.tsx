@@ -1,8 +1,7 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
+import { BriefcaseBusiness, FileText, Home, Mail } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { Container } from "@/components/container";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { localePath, type Locale } from "@/lib/i18n";
@@ -29,140 +28,79 @@ export function SiteHeader({
   };
   currentPath: "" | "/resume" | "/portfolio";
 }) {
-  const [open, setOpen] = useState(false);
-  const navItems = [
-    { href: localePath(locale), label: labels.nav.home },
-    { href: localePath(locale, "/resume"), label: labels.nav.resume },
-    { href: localePath(locale, "/portfolio"), label: labels.nav.portfolio }
-  ];
-  const contactHref = `${localePath(locale)}#contact`;
   const currentHref = currentPath ? localePath(locale, currentPath) : localePath(locale);
-
-  useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
-
-  function closeMenu() {
-    setOpen(false);
-  }
+  const navItems = [
+    { href: localePath(locale), label: labels.nav.home, icon: Home },
+    { href: localePath(locale, "/resume"), label: labels.nav.resume, icon: FileText },
+    { href: localePath(locale, "/portfolio"), label: labels.nav.portfolio, icon: BriefcaseBusiness },
+    { href: `${localePath(locale)}#contact`, label: labels.nav.contact, icon: Mail }
+  ];
 
   return (
-    <header className="sticky top-0 z-30 border-b border-[color:var(--line)] bg-[color:rgba(232,239,234,0.72)] backdrop-blur-md">
-      <Container>
-        <div className="flex items-center justify-between gap-4 py-4">
-          <Link
-            href={localePath(locale)}
-            className="min-w-0 text-xs uppercase tracking-[0.22em] text-[color:var(--accent-deep)] sm:text-sm sm:tracking-[0.4em]"
-            onClick={closeMenu}
-          >
-            <span className="block truncate">{name}</span>
-          </Link>
-
-          <div className="hidden items-center gap-3 lg:flex">
-            <nav className="flex items-center gap-6 text-sm text-[color:var(--muted)]">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="rounded-full px-3 py-1 transition hover:bg-[color:rgba(49,95,74,0.08)] hover:text-[color:var(--foreground)]"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-            <LanguageSwitcher locale={locale} path={currentPath} labels={labels.switcher} />
+    <>
+      <header className="sticky top-0 z-30 border-b border-[color:var(--line)] bg-[color:rgba(232,239,234,0.72)] backdrop-blur-md">
+        <Container>
+          <div className="flex items-center justify-between gap-4 py-4">
             <Link
-              href={contactHref}
-              className="inline-flex items-center justify-center rounded-full bg-[color:var(--accent-deep)] px-4 py-2 text-sm font-medium !text-white transition hover:bg-[color:var(--accent)]"
+              href={localePath(locale)}
+              className="min-w-0 text-xs uppercase tracking-[0.22em] text-[color:var(--accent-deep)] sm:text-sm sm:tracking-[0.4em]"
             >
-              {labels.nav.contact}
+              <span className="block truncate">{name}</span>
             </Link>
+
+            <div className="hidden items-center gap-3 lg:flex">
+              <nav className="flex items-center gap-6 text-sm text-[color:var(--muted)]">
+                {navItems.slice(0, 3).map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="rounded-full px-3 py-1 transition hover:bg-[color:rgba(49,95,74,0.08)] hover:text-[color:var(--foreground)]"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+              <LanguageSwitcher locale={locale} path={currentPath} labels={labels.switcher} />
+              <Link
+                href={navItems[3].href}
+                className="inline-flex items-center justify-center rounded-full bg-[color:var(--accent-deep)] px-4 py-2 text-sm font-medium !text-white transition hover:bg-[color:var(--accent)]"
+              >
+                {labels.nav.contact}
+              </Link>
+            </div>
+
+            <div className="lg:hidden">
+              <LanguageSwitcher locale={locale} path={currentPath} labels={labels.switcher} />
+            </div>
           </div>
+        </Container>
+      </header>
 
-          <button
-            type="button"
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            onClick={() => setOpen((current) => !current)}
-            className="inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border border-[color:rgba(24,78,103,0.18)] bg-[color:rgba(15,47,64,0.92)] text-white shadow-[0_14px_32px_rgba(24,78,103,0.18)] lg:hidden"
-          >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
-        </div>
-      </Container>
+      <div className="fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 lg:hidden">
+        <div className="mx-auto max-w-md rounded-[1.75rem] border border-[color:rgba(38,77,102,0.14)] bg-[linear-gradient(180deg,rgba(244,250,252,0.96),rgba(229,240,246,0.94))] p-2 shadow-[0_20px_50px_rgba(16,33,43,0.18)] backdrop-blur-xl">
+          <nav className="grid grid-cols-4 gap-2">
+            {navItems.map((item) => {
+              const active = item.href === currentHref || (item.label === labels.nav.contact && currentPath === "");
+              const Icon = item.icon;
 
-      <div
-        className={`fixed inset-0 z-40 bg-[rgba(7,17,24,0.44)] transition lg:hidden ${
-          open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
-        }`}
-        onClick={closeMenu}
-      />
-
-      <div
-        className={`fixed inset-y-0 right-0 z-50 w-[min(22rem,88vw)] border-l border-[color:rgba(38,77,102,0.18)] bg-[linear-gradient(180deg,rgba(245,250,252,0.98),rgba(232,241,246,0.97))] p-5 shadow-[0_30px_90px_rgba(16,33,43,0.24)] backdrop-blur-xl transition-transform duration-300 ease-out lg:hidden ${
-          open ? "translate-x-0" : "translate-x-full"
-        }`}
-        aria-hidden={!open}
-      >
-        <div className="flex items-center justify-between gap-3">
-          <p className="text-xs uppercase tracking-[0.35em] text-[color:var(--accent-deep)]">Menu</p>
-          <button
-            type="button"
-            aria-label="Close menu"
-            onClick={closeMenu}
-            className="inline-flex h-10 w-10 touch-manipulation items-center justify-center rounded-full border border-[color:rgba(24,78,103,0.16)] bg-[color:rgba(255,255,255,0.92)] text-[color:var(--accent-deep)]"
-          >
-            <X className="h-5 w-5" />
-          </button>
-        </div>
-
-        <div className="-mx-5 mt-6 flex min-h-[calc(100%-4.5rem)] flex-col border-y border-[color:rgba(38,77,102,0.12)] bg-[linear-gradient(180deg,rgba(225,238,245,0.96),rgba(214,230,239,0.9))] px-5 py-5 shadow-[0_16px_36px_rgba(24,78,103,0.08)]">
-          <div className="flex flex-1 flex-col rounded-[1.4rem] border border-[color:rgba(255,255,255,0.38)] bg-[linear-gradient(180deg,rgba(255,255,255,0.42),rgba(255,255,255,0.22))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.4)]">
-            <div className="space-y-3">
-              {navItems.map((item) => (
+              return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  onClick={closeMenu}
-                  className={`block rounded-[1.25rem] border px-4 py-4 text-base shadow-[0_10px_24px_rgba(24,78,103,0.06)] transition ${
-                    item.href === currentHref
-                      ? "border-[color:rgba(24,78,103,0.22)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,250,252,0.96))] text-[color:var(--foreground)]"
-                      : "border-[color:rgba(38,77,102,0.1)] bg-[color:rgba(255,255,255,0.82)] text-[color:var(--muted)]"
+                  className={`flex min-h-[4.5rem] flex-col items-center justify-center rounded-[1.1rem] px-2 py-2 text-center text-[11px] transition ${
+                    active
+                      ? "bg-[color:rgba(15,47,64,0.94)] !text-white shadow-[0_14px_30px_rgba(24,78,103,0.22)]"
+                      : "bg-[color:rgba(255,255,255,0.66)] text-[color:var(--muted)]"
                   }`}
                 >
-                  <div className="flex items-center justify-between gap-3">
-                    <span>{item.label}</span>
-                    <span
-                      className={`h-2.5 w-2.5 rounded-full ${
-                        item.href === currentHref ? "bg-[color:var(--accent-deep)]" : "bg-[color:rgba(24,78,103,0.18)]"
-                      }`}
-                    />
-                  </div>
+                  <Icon className="mb-1.5 h-4 w-4" />
+                  <span className="leading-4">{item.label}</span>
                 </Link>
-              ))}
-            </div>
-
-            <div className="mt-6 rounded-[1.25rem] border border-[color:rgba(38,77,102,0.1)] bg-[color:rgba(255,255,255,0.58)] p-4">
-              <p className="text-xs uppercase tracking-[0.3em] text-[color:var(--muted)]">Language</p>
-              <div className="mt-3">
-                <LanguageSwitcher locale={locale} path={currentPath} labels={labels.switcher} />
-              </div>
-            </div>
-
-            <Link
-              href={contactHref}
-              onClick={closeMenu}
-              className="mt-auto inline-flex w-full items-center justify-center rounded-[1.25rem] bg-[color:var(--accent-deep)] px-4 py-4 text-sm font-medium !text-white shadow-[0_16px_36px_rgba(24,78,103,0.22)] transition hover:bg-[color:var(--accent)]"
-            >
-              {labels.nav.contact}
-            </Link>
-          </div>
+              );
+            })}
+          </nav>
         </div>
       </div>
-    </header>
+    </>
   );
 }
