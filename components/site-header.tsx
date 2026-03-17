@@ -87,7 +87,7 @@ export function SiteHeader({
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((current) => !current)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:rgba(24,78,103,0.14)] bg-white/80 text-[color:var(--accent-deep)] shadow-[0_10px_30px_rgba(24,78,103,0.08)] lg:hidden"
+            className="inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border border-[color:rgba(24,78,103,0.18)] bg-[color:rgba(15,47,64,0.92)] text-white shadow-[0_14px_32px_rgba(24,78,103,0.18)] lg:hidden"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -95,14 +95,14 @@ export function SiteHeader({
       </Container>
 
       <div
-        className={`fixed inset-0 z-40 bg-[rgba(7,17,24,0.32)] transition lg:hidden ${
+        className={`fixed inset-0 z-40 bg-[rgba(7,17,24,0.44)] transition lg:hidden ${
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
         onClick={closeMenu}
       />
 
       <div
-        className={`fixed inset-y-0 right-0 z-50 w-[min(22rem,88vw)] border-l border-[color:var(--line)] bg-[linear-gradient(180deg,rgba(247,251,253,0.98),rgba(233,242,247,0.96))] p-5 shadow-[0_30px_90px_rgba(16,33,43,0.18)] transition-transform duration-300 ease-out lg:hidden ${
+        className={`fixed inset-y-0 right-0 z-50 w-[min(22rem,88vw)] border-l border-[color:rgba(38,77,102,0.18)] bg-[linear-gradient(180deg,rgba(245,250,252,0.98),rgba(232,241,246,0.97))] p-5 shadow-[0_30px_90px_rgba(16,33,43,0.24)] backdrop-blur-xl transition-transform duration-300 ease-out lg:hidden ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
         aria-hidden={!open}
@@ -113,7 +113,7 @@ export function SiteHeader({
             type="button"
             aria-label="Close menu"
             onClick={closeMenu}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:rgba(24,78,103,0.14)] bg-white/80 text-[color:var(--accent-deep)]"
+            className="inline-flex h-10 w-10 touch-manipulation items-center justify-center rounded-full border border-[color:rgba(24,78,103,0.16)] bg-[color:rgba(255,255,255,0.92)] text-[color:var(--accent-deep)]"
           >
             <X className="h-5 w-5" />
           </button>

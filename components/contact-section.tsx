@@ -106,54 +106,70 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
 
   return (
     <section id="contact" className="scroll-mt-28 py-16">
-      <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
-        <div className="rounded-[1.75rem] border border-[color:var(--line)] bg-[linear-gradient(180deg,rgba(247,251,253,0.96),rgba(233,242,247,0.88))] p-4 shadow-[var(--shadow)] sm:rounded-[2.25rem] sm:p-8">
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-8">
+        <div className="rounded-[1.4rem] border border-[color:var(--line)] bg-[linear-gradient(180deg,rgba(247,251,253,0.995),rgba(236,244,248,0.99))] p-3.5 shadow-[var(--shadow)] max-[440px]:rounded-[1.2rem] max-[440px]:p-3 sm:rounded-[2.25rem] sm:bg-[linear-gradient(180deg,rgba(247,251,253,0.96),rgba(233,242,247,0.88))] sm:p-8">
           <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8">
             <div className="space-y-5 sm:space-y-6">
               <div className="max-w-2xl">
-                <p className="mb-3 text-xs uppercase tracking-[0.45em] text-[color:var(--accent)]">{copy.eyebrow}</p>
-                <h2 className="text-2xl leading-tight font-semibold tracking-[-0.03em] sm:text-4xl">{copy.title}</h2>
-                <p className="mt-3 text-sm leading-7 text-[color:var(--muted)] sm:mt-4 sm:text-base">{copy.description}</p>
+                <p className="mb-3 text-[11px] uppercase tracking-[0.32em] text-[color:var(--accent)] max-[440px]:tracking-[0.24em]">
+                  {copy.eyebrow}
+                </p>
+                <h2 className="text-2xl leading-tight font-semibold tracking-[-0.03em] max-[440px]:text-[1.65rem] sm:text-4xl">
+                  {copy.title}
+                </h2>
+                <p className="mt-3 text-sm leading-7 text-[color:var(--muted)] max-[440px]:text-[0.95rem] max-[440px]:leading-6 sm:mt-4 sm:text-base">
+                  {copy.description}
+                </p>
               </div>
 
-              <div className="space-y-3">
-                <p className="text-xs uppercase tracking-[0.35em] text-[color:var(--accent-deep)]">{copy.introLabel}</p>
-                {copy.intents.map((entry) => {
-                  const isActive = entry.id === intent;
+              <div className="rounded-[1.2rem] border border-[color:rgba(38,77,102,0.12)] bg-[linear-gradient(180deg,rgba(243,249,252,0.98),rgba(235,244,248,0.96))] p-3 shadow-[0_12px_32px_rgba(24,78,103,0.06)] max-[440px]:rounded-[1rem] max-[440px]:p-2.5 sm:rounded-[1.6rem] sm:bg-[linear-gradient(180deg,rgba(243,249,252,0.82),rgba(235,244,248,0.74))] sm:p-4">
+                <p className="text-[11px] uppercase tracking-[0.28em] text-[color:var(--accent-deep)] max-[440px]:tracking-[0.2em]">
+                  {copy.introLabel}
+                </p>
+                <div className="mt-3 space-y-3">
+                  {copy.intents.map((entry) => {
+                    const isActive = entry.id === intent;
 
-                  return (
-                    <button
-                      key={entry.id}
-                      type="button"
-                      onClick={() => setIntent(entry.id)}
-                      className={`w-full rounded-[1.2rem] border p-3.5 text-left transition sm:rounded-[1.5rem] sm:p-4 ${
-                        isActive
-                          ? "border-[color:rgba(24,78,103,0.24)] bg-[linear-gradient(180deg,rgba(24,78,103,0.14),rgba(24,78,103,0.06))] shadow-[0_18px_45px_rgba(24,78,103,0.08)]"
-                          : "border-[color:var(--line)] bg-white/55 hover:border-[color:rgba(24,78,103,0.2)] hover:bg-white/72"
-                      }`}
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <p className="text-base font-medium tracking-[-0.02em] text-[color:var(--foreground)] sm:text-lg">{entry.title}</p>
-                          <p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">{entry.description}</p>
+                    return (
+                      <button
+                        key={entry.id}
+                        type="button"
+                        onClick={() => setIntent(entry.id)}
+                        className={`w-full rounded-[1rem] border p-3 text-left transition max-[440px]:rounded-[0.9rem] max-[440px]:p-2.5 sm:rounded-[1.5rem] sm:p-4 ${
+                          isActive
+                            ? "border-[color:rgba(24,78,103,0.24)] bg-[linear-gradient(180deg,rgba(235,245,250,0.98),rgba(228,240,246,0.96))] shadow-[0_18px_45px_rgba(24,78,103,0.08)] sm:bg-[linear-gradient(180deg,rgba(24,78,103,0.14),rgba(24,78,103,0.06))]"
+                            : "border-[color:var(--line)] bg-[color:rgba(255,255,255,0.94)] hover:border-[color:rgba(24,78,103,0.2)] hover:bg-[color:rgba(255,255,255,0.98)] sm:bg-white/72 sm:hover:bg-white/88"
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-4">
+                          <div>
+                            <p className="text-[1.05rem] font-medium tracking-[-0.02em] text-[color:var(--foreground)] max-[440px]:text-base sm:text-lg">
+                              {entry.title}
+                            </p>
+                            <p className="mt-2 text-sm leading-6 text-[color:var(--muted)] max-[440px]:text-[0.94rem] max-[440px]:leading-6">
+                              {entry.description}
+                            </p>
+                          </div>
+                          <span
+                            className={`mt-1 h-3 w-3 shrink-0 rounded-full ${
+                              isActive ? "bg-[color:var(--accent-deep)]" : "bg-[color:rgba(24,78,103,0.18)]"
+                            }`}
+                          />
                         </div>
-                        <span
-                          className={`mt-1 h-3 w-3 shrink-0 rounded-full ${
-                            isActive ? "bg-[color:var(--accent-deep)]" : "bg-[color:rgba(24,78,103,0.18)]"
-                          }`}
-                        />
-                      </div>
-                    </button>
-                  );
-                })}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
-            <div className="rounded-[1.35rem] border border-[color:var(--line)] bg-[color:rgba(255,255,255,0.72)] p-4 sm:rounded-[1.8rem] sm:p-6">
+            <div className="rounded-[1.2rem] border border-[color:var(--line)] bg-[color:rgba(255,255,255,0.96)] p-3.5 max-[440px]:rounded-[1rem] max-[440px]:p-3 sm:rounded-[1.8rem] sm:bg-[color:rgba(255,255,255,0.72)] sm:p-6">
               <div className="flex flex-col gap-2 border-b border-[color:var(--line)] pb-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.35em] text-[color:var(--accent-deep)]">{copy.formLabel}</p>
-                  <p className="mt-2 text-base font-medium tracking-[-0.02em] text-[color:var(--foreground)] sm:text-lg">
+                  <p className="text-[11px] uppercase tracking-[0.28em] text-[color:var(--accent-deep)] max-[440px]:tracking-[0.2em]">
+                    {copy.formLabel}
+                  </p>
+                  <p className="mt-2 text-base font-medium tracking-[-0.02em] text-[color:var(--foreground)] max-[440px]:text-[0.98rem] sm:text-lg">
                     {copy.activeIntentLabel} <span className="text-[color:var(--accent-deep)]">{activeIntent.title}</span>
                   </p>
                 </div>
@@ -171,7 +187,7 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
                       onChange={(event) => setName(event.target.value)}
                       placeholder={copy.placeholders.name}
                       required
-                      className="w-full rounded-[1rem] border border-[color:var(--line)] bg-white px-4 py-3 text-base text-[color:var(--foreground)] outline-none transition placeholder:text-[color:rgba(86,112,128,0.72)] focus:border-[color:rgba(24,78,103,0.34)] focus:ring-4 focus:ring-[rgba(24,78,103,0.08)]"
+                      className="w-full rounded-[0.9rem] border border-[color:var(--line)] bg-white px-3.5 py-3 text-base text-[color:var(--foreground)] outline-none transition placeholder:text-[color:rgba(86,112,128,0.72)] focus:border-[color:rgba(24,78,103,0.34)] focus:ring-4 focus:ring-[rgba(24,78,103,0.08)] max-[440px]:px-3 max-[440px]:py-2.5"
                     />
                   </label>
 
@@ -183,7 +199,7 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
                       onChange={(event) => setEmail(event.target.value)}
                       placeholder={copy.placeholders.email}
                       required
-                      className="w-full rounded-[1rem] border border-[color:var(--line)] bg-white px-4 py-3 text-base text-[color:var(--foreground)] outline-none transition placeholder:text-[color:rgba(86,112,128,0.72)] focus:border-[color:rgba(24,78,103,0.34)] focus:ring-4 focus:ring-[rgba(24,78,103,0.08)]"
+                      className="w-full rounded-[0.9rem] border border-[color:var(--line)] bg-white px-3.5 py-3 text-base text-[color:var(--foreground)] outline-none transition placeholder:text-[color:rgba(86,112,128,0.72)] focus:border-[color:rgba(24,78,103,0.34)] focus:ring-4 focus:ring-[rgba(24,78,103,0.08)] max-[440px]:px-3 max-[440px]:py-2.5"
                     />
                   </label>
                 </div>
@@ -195,12 +211,12 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
                     onChange={(event) => setMessage(event.target.value)}
                     placeholder={copy.placeholders.message[intent]}
                     required
-                    rows={7}
-                    className="w-full resize-y rounded-[1rem] border border-[color:var(--line)] bg-white px-4 py-3 text-base leading-7 text-[color:var(--foreground)] outline-none transition placeholder:text-[color:rgba(86,112,128,0.72)] focus:border-[color:rgba(24,78,103,0.34)] focus:ring-4 focus:ring-[rgba(24,78,103,0.08)]"
+                    rows={6}
+                    className="w-full resize-y rounded-[0.9rem] border border-[color:var(--line)] bg-white px-3.5 py-3 text-base leading-7 text-[color:var(--foreground)] outline-none transition placeholder:text-[color:rgba(86,112,128,0.72)] focus:border-[color:rgba(24,78,103,0.34)] focus:ring-4 focus:ring-[rgba(24,78,103,0.08)] max-[440px]:px-3 max-[440px]:py-2.5 max-[440px]:text-[0.96rem] max-[440px]:leading-6"
                   />
                 </label>
 
-                <div className="space-y-3 overflow-hidden rounded-[1rem] border border-[color:var(--line)] bg-[color:rgba(237,246,251,0.64)] p-4">
+                <div className="space-y-3 overflow-hidden rounded-[0.95rem] border border-[color:var(--line)] bg-[color:rgba(237,246,251,0.94)] p-3.5 max-[440px]:rounded-[0.9rem] max-[440px]:p-3 sm:bg-[color:rgba(237,246,251,0.64)]">
                   <p className="text-sm text-[color:var(--muted)]">{copy.turnstile.label}</p>
                   <div className="max-w-full overflow-x-auto">
                     <TurnstileWidget
@@ -228,7 +244,7 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
                   <button
                     type="submit"
                     disabled={status === "sending" || (!turnstileToken && Boolean(siteKey))}
-                    className="w-full rounded-full bg-[color:var(--accent-deep)] px-6 py-3 text-sm font-medium text-white transition hover:bg-[color:var(--accent)] disabled:cursor-wait disabled:opacity-70 sm:w-auto"
+                    className="w-full rounded-full bg-[color:var(--accent-deep)] px-5 py-3 text-sm font-medium text-white transition hover:bg-[color:var(--accent)] disabled:cursor-wait disabled:opacity-70 max-[440px]:px-4 max-[440px]:py-2.5 sm:w-auto"
                   >
                     {status === "sending" ? copy.sending : copy.submit}
                   </button>
