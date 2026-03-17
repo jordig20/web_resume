@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
 type ContactIntent = "work" | "collaboration" | "hello";
 
@@ -69,12 +70,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Submission too fast" }, { status: 400 });
     }
 
-    const resendApiKey = process.env.RESEND_API_KEY;
     const to = process.env.CONTACT_TO_EMAIL;
     const from = process.env.CONTACT_FROM_EMAIL;
     const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
+    const gmailUser = process.env.GMAIL_SMTP_USER;
+    const gmailAppPassword = process.env.GMAIL_SMTP_APP_PASSWORD;
 
-    if (!resendApiKey || !to || !from || !turnstileSecret) {
+    if (!to || !from || !turnstileSecret || !gmailUser || !gmailAppPassword) {
       return NextResponse.json({ error: "Missing contact configuration" }, { status: 503 });
     }
 
@@ -114,39 +116,36 @@ export async function POST(request: Request) {
     const safeEmail = escapeHtml(cleanEmail);
     const safeMessage = escapeHtml(cleanMessage).replace(/\n/g, "<br />");
 
-    const response = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${resendApiKey}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        from,
-        to,
-        reply_to: cleanEmail,
-        subject: `[Website] ${intentLabels[intent]} from ${cleanName}`,
-        text: [
-          `Intent: ${intentLabels[intent]}`,
-          `Name: ${cleanName}`,
-          `Email: ${cleanEmail}`,
-          "",
-          cleanMessage
-        ].join("\n"),
-        html: `
-          <div style="font-family:Arial,sans-serif;line-height:1.6;color:#13202a">
-            <p><strong>Intent:</strong> ${intentLabels[intent]}</p>
-            <p><strong>Name:</strong> ${safeName}</p>
-            <p><strong>Email:</strong> ${safeEmail}</p>
-            <p><strong>Message:</strong></p>
-            <p>${safeMessage}</p>
-          </div>
-        `
-      })
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: gmailUser,
+        pass: gmailAppPassword
+      }
     });
 
-    if (!response.ok) {
-      return NextResponse.json({ error: "Mail provider rejected request" }, { status: 502 });
-    }
+    await transporter.sendMail({
+      from,
+      to,
+      replyTo: cleanEmail,
+      subject: `[Website] ${intentLabels[intent]} from ${cleanName}`,
+      text: [
+        `Intent: ${intentLabels[intent]}`,
+        `Name: ${cleanName}`,
+        `Email: ${cleanEmail}`,
+        "",
+        cleanMessage
+      ].join("\n"),
+      html: `
+        <div style="font-family:Arial,sans-serif;line-height:1.6;color:#13202a">
+          <p><strong>Intent:</strong> ${intentLabels[intent]}</p>
+          <p><strong>Name:</strong> ${safeName}</p>
+          <p><strong>Email:</strong> ${safeEmail}</p>
+          <p><strong>Message:</strong></p>
+          <p>${safeMessage}</p>
+        </div>
+      `
+    });
 
     return NextResponse.json({ ok: true });
   } catch {
