@@ -119,17 +119,19 @@ export function SiteHeader({
           </button>
         </div>
 
-        <div className="mt-6 space-y-3">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={closeMenu}
-              className="block rounded-[1.2rem] border border-[color:var(--line)] bg-white/70 px-4 py-3 text-base text-[color:var(--foreground)] shadow-[0_10px_24px_rgba(24,78,103,0.06)]"
-            >
-              {item.label}
-            </Link>
-          ))}
+        <div className="mt-6 rounded-[1.2rem] border border-[color:rgba(38,77,102,0.12)] bg-[linear-gradient(180deg,rgba(230,241,247,0.9),rgba(222,235,242,0.84))] p-3 shadow-[0_16px_36px_rgba(24,78,103,0.08)]">
+          <div className="space-y-3 rounded-[0.95rem] bg-[color:rgba(255,255,255,0.28)] p-1.5">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={closeMenu}
+                className="block rounded-[1.05rem] border border-[color:var(--line)] bg-[color:rgba(255,255,255,0.92)] px-4 py-3 text-base text-[color:var(--foreground)] shadow-[0_10px_24px_rgba(24,78,103,0.06)]"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
         </div>
 
         <div className="mt-6 rounded-[1.2rem] border border-[color:var(--line)] bg-white/60 p-4">
