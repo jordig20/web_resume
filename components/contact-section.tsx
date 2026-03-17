@@ -47,6 +47,7 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
   const [turnstileToken, setTurnstileToken] = useState("");
   const [turnstileError, setTurnstileError] = useState("");
   const [turnstileResetKey, setTurnstileResetKey] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
@@ -56,6 +57,7 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setTurnstileError("");
+    setErrorMessage("");
 
     if (siteKey && !turnstileToken) {
       setTurnstileError(copy.turnstile.error);
@@ -84,7 +86,8 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
       });
 
       if (!response.ok) {
-        throw new Error("Request failed");
+        const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(payload?.error || "Request failed");
       }
 
       setStatus("success");
@@ -94,7 +97,8 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
       setTurnstileToken("");
       setTurnstileResetKey((current) => current + 1);
       event.currentTarget.reset();
-    } catch {
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : copy.error);
       setStatus("error");
     }
   }
@@ -231,7 +235,7 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
                       status === "error" ? "text-[color:#8e3b31]" : "text-[color:var(--muted)]"
                     }`}
                   >
-                    {status === "success" ? copy.success : status === "error" ? copy.error : null}
+                    {status === "success" ? copy.success : status === "error" ? errorMessage || copy.error : null}
                   </p>
                 </div>
               </form>

@@ -76,7 +76,7 @@ export async function POST(request: Request) {
     const gmailUser = process.env.GMAIL_SMTP_USER;
     const gmailAppPassword = process.env.GMAIL_SMTP_APP_PASSWORD;
 
-    if (!to || !from || !turnstileSecret || !gmailUser || !gmailAppPassword) {
+    if (!to || !turnstileSecret || !gmailUser || !gmailAppPassword) {
       return NextResponse.json({ error: "Missing contact configuration" }, { status: 503 });
     }
 
@@ -116,6 +116,9 @@ export async function POST(request: Request) {
     const safeEmail = escapeHtml(cleanEmail);
     const safeMessage = escapeHtml(cleanMessage).replace(/\n/g, "<br />");
 
+    const senderName = from?.trim() || "Jordi Granada Rubio";
+    const senderAddress = gmailUser.trim();
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -125,7 +128,7 @@ export async function POST(request: Request) {
     });
 
     await transporter.sendMail({
-      from,
+      from: `${senderName} <${senderAddress}>`,
       to,
       replyTo: cleanEmail,
       subject: `[Website] ${intentLabels[intent]} from ${cleanName}`,
@@ -148,7 +151,8 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ ok: true });
-  } catch {
-    return NextResponse.json({ error: "Unexpected error" }, { status: 500 });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unexpected error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
