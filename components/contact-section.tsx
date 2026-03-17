@@ -122,11 +122,12 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
                 </p>
               </div>
 
-              <div className="rounded-[1.2rem] border border-[color:rgba(38,77,102,0.12)] bg-[linear-gradient(180deg,rgba(243,249,252,0.98),rgba(235,244,248,0.96))] p-3 shadow-[0_12px_32px_rgba(24,78,103,0.06)] max-[440px]:rounded-[1rem] max-[440px]:p-2.5 sm:rounded-[1.6rem] sm:bg-[linear-gradient(180deg,rgba(243,249,252,0.82),rgba(235,244,248,0.74))] sm:p-4">
+              <div className="rounded-[1.2rem] border border-[color:rgba(38,77,102,0.16)] bg-[linear-gradient(180deg,rgba(229,240,246,0.995),rgba(220,234,241,0.985))] p-3 shadow-[0_16px_36px_rgba(24,78,103,0.1)] max-[440px]:rounded-[1rem] max-[440px]:p-2.5 sm:rounded-[1.6rem] sm:bg-[linear-gradient(180deg,rgba(235,245,249,0.9),rgba(226,239,245,0.82))] sm:p-4">
                 <p className="text-[11px] uppercase tracking-[0.28em] text-[color:var(--accent-deep)] max-[440px]:tracking-[0.2em]">
                   {copy.introLabel}
                 </p>
-                <div className="mt-3 space-y-3">
+                <div className="mt-3 rounded-[0.95rem] bg-[color:rgba(255,255,255,0.26)] p-1.5 max-[440px]:rounded-[0.85rem] max-[440px]:bg-[color:rgba(255,255,255,0.34)] max-[440px]:p-1.5 sm:bg-[color:rgba(255,255,255,0.18)]">
+                  <div className="space-y-3">
                   {copy.intents.map((entry) => {
                     const isActive = entry.id === intent;
 
@@ -159,6 +160,7 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
                       </button>
                     );
                   })}
+                  </div>
                 </div>
               </div>
             </div>
