@@ -119,8 +119,8 @@ export function SiteHeader({
           </button>
         </div>
 
-        <div className="mt-6 rounded-[1.2rem] border border-[color:rgba(38,77,102,0.12)] bg-[linear-gradient(180deg,rgba(230,241,247,0.9),rgba(222,235,242,0.84))] p-3 shadow-[0_16px_36px_rgba(24,78,103,0.08)]">
-          <div className="space-y-3 rounded-[0.95rem] bg-[color:rgba(255,255,255,0.28)] p-1.5">
+        <div className="-mx-5 mt-6 border-y border-[color:rgba(38,77,102,0.12)] bg-[linear-gradient(180deg,rgba(230,241,247,0.92),rgba(222,235,242,0.86))] px-5 py-4 shadow-[0_16px_36px_rgba(24,78,103,0.08)]">
+          <div className="space-y-3 rounded-[1rem] bg-[color:rgba(255,255,255,0.22)] p-2">
             {navItems.map((item) => (
               <Link
                 key={item.href}
