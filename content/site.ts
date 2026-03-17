@@ -37,6 +37,7 @@ export type UiCopy = {
     home: string;
     resume: string;
     portfolio: string;
+    contact: string;
   };
   switcher: {
     es: string;
@@ -340,7 +341,7 @@ export const siteContent: Record<Locale, SiteContent> = {
 
 export const uiCopy: Record<Locale, UiCopy> = {
   es: {
-    nav: { home: "Inicio", resume: "CV", portfolio: "Portfolio" },
+    nav: { home: "Inicio", resume: "CV", portfolio: "Portfolio", contact: "Contacto" },
     switcher: { es: "ES", en: "EN" },
     hero: {
       title: ["Construyendo lo que amo", "desde Banff."],
@@ -444,7 +445,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
     }
   },
   en: {
-    nav: { home: "Home", resume: "Resume", portfolio: "Portfolio" },
+    nav: { home: "Home", resume: "Resume", portfolio: "Portfolio", contact: "Contact" },
     switcher: { es: "ES", en: "EN" },
     hero: {
       title: ["Building what I love", "from Banff."],

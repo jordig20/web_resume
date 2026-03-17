@@ -105,15 +105,15 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
   }
 
   return (
-    <section className="py-16">
+    <section id="contact" className="scroll-mt-28 py-16">
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
-        <div className="rounded-[2.25rem] border border-[color:var(--line)] bg-[linear-gradient(180deg,rgba(247,251,253,0.96),rgba(233,242,247,0.88))] p-6 shadow-[var(--shadow)] sm:p-8">
-          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-            <div className="space-y-6">
+        <div className="rounded-[1.75rem] border border-[color:var(--line)] bg-[linear-gradient(180deg,rgba(247,251,253,0.96),rgba(233,242,247,0.88))] p-4 shadow-[var(--shadow)] sm:rounded-[2.25rem] sm:p-8">
+          <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8">
+            <div className="space-y-5 sm:space-y-6">
               <div className="max-w-2xl">
                 <p className="mb-3 text-xs uppercase tracking-[0.45em] text-[color:var(--accent)]">{copy.eyebrow}</p>
-                <h2 className="text-3xl leading-tight font-semibold tracking-[-0.03em] sm:text-4xl">{copy.title}</h2>
-                <p className="mt-4 text-base leading-7 text-[color:var(--muted)]">{copy.description}</p>
+                <h2 className="text-2xl leading-tight font-semibold tracking-[-0.03em] sm:text-4xl">{copy.title}</h2>
+                <p className="mt-3 text-sm leading-7 text-[color:var(--muted)] sm:mt-4 sm:text-base">{copy.description}</p>
               </div>
 
               <div className="space-y-3">
@@ -126,7 +126,7 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
                       key={entry.id}
                       type="button"
                       onClick={() => setIntent(entry.id)}
-                      className={`w-full rounded-[1.5rem] border p-4 text-left transition ${
+                      className={`w-full rounded-[1.2rem] border p-3.5 text-left transition sm:rounded-[1.5rem] sm:p-4 ${
                         isActive
                           ? "border-[color:rgba(24,78,103,0.24)] bg-[linear-gradient(180deg,rgba(24,78,103,0.14),rgba(24,78,103,0.06))] shadow-[0_18px_45px_rgba(24,78,103,0.08)]"
                           : "border-[color:var(--line)] bg-white/55 hover:border-[color:rgba(24,78,103,0.2)] hover:bg-white/72"
@@ -134,7 +134,7 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
                     >
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <p className="text-lg font-medium tracking-[-0.02em] text-[color:var(--foreground)]">{entry.title}</p>
+                          <p className="text-base font-medium tracking-[-0.02em] text-[color:var(--foreground)] sm:text-lg">{entry.title}</p>
                           <p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">{entry.description}</p>
                         </div>
                         <span
@@ -149,11 +149,11 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
               </div>
             </div>
 
-            <div className="rounded-[1.8rem] border border-[color:var(--line)] bg-[color:rgba(255,255,255,0.72)] p-5 sm:p-6">
-              <div className="flex items-center justify-between gap-4 border-b border-[color:var(--line)] pb-4">
+            <div className="rounded-[1.35rem] border border-[color:var(--line)] bg-[color:rgba(255,255,255,0.72)] p-4 sm:rounded-[1.8rem] sm:p-6">
+              <div className="flex flex-col gap-2 border-b border-[color:var(--line)] pb-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                 <div>
                   <p className="text-xs uppercase tracking-[0.35em] text-[color:var(--accent-deep)]">{copy.formLabel}</p>
-                  <p className="mt-2 text-lg font-medium tracking-[-0.02em] text-[color:var(--foreground)]">
+                  <p className="mt-2 text-base font-medium tracking-[-0.02em] text-[color:var(--foreground)] sm:text-lg">
                     {copy.activeIntentLabel} <span className="text-[color:var(--accent-deep)]">{activeIntent.title}</span>
                   </p>
                 </div>
@@ -200,39 +200,41 @@ export function ContactSection({ copy }: { copy: ContactCopy }) {
                   />
                 </label>
 
-                <div className="space-y-3 rounded-[1rem] border border-[color:var(--line)] bg-[color:rgba(237,246,251,0.64)] p-4">
+                <div className="space-y-3 overflow-hidden rounded-[1rem] border border-[color:var(--line)] bg-[color:rgba(237,246,251,0.64)] p-4">
                   <p className="text-sm text-[color:var(--muted)]">{copy.turnstile.label}</p>
-                  <TurnstileWidget
-                    siteKey={siteKey}
-                    resetKey={turnstileResetKey}
-                    onVerify={(token) => {
-                      setTurnstileToken(token);
-                      setTurnstileError("");
-                    }}
-                    onExpire={() => {
-                      setTurnstileToken("");
-                      setTurnstileError(copy.turnstile.expired);
-                    }}
-                    onError={() => {
-                      setTurnstileToken("");
-                      setTurnstileError(copy.turnstile.error);
-                    }}
-                  />
+                  <div className="max-w-full overflow-x-auto">
+                    <TurnstileWidget
+                      siteKey={siteKey}
+                      resetKey={turnstileResetKey}
+                      onVerify={(token) => {
+                        setTurnstileToken(token);
+                        setTurnstileError("");
+                      }}
+                      onExpire={() => {
+                        setTurnstileToken("");
+                        setTurnstileError(copy.turnstile.expired);
+                      }}
+                      onError={() => {
+                        setTurnstileToken("");
+                        setTurnstileError(copy.turnstile.error);
+                      }}
+                    />
+                  </div>
                   {!siteKey ? <p className="text-sm text-[color:#8e3b31]">{copy.turnstile.missing}</p> : null}
                   {turnstileError ? <p className="text-sm text-[color:#8e3b31]">{turnstileError}</p> : null}
                 </div>
 
-                <div className="flex flex-wrap items-center gap-4 pt-1">
+                <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
                   <button
                     type="submit"
                     disabled={status === "sending" || (!turnstileToken && Boolean(siteKey))}
-                    className="rounded-full bg-[color:var(--accent-deep)] px-6 py-3 text-sm font-medium text-white transition hover:bg-[color:var(--accent)] disabled:cursor-wait disabled:opacity-70"
+                    className="w-full rounded-full bg-[color:var(--accent-deep)] px-6 py-3 text-sm font-medium text-white transition hover:bg-[color:var(--accent)] disabled:cursor-wait disabled:opacity-70 sm:w-auto"
                   >
                     {status === "sending" ? copy.sending : copy.submit}
                   </button>
 
                   <p
-                    className={`text-sm ${
+                    className={`text-sm leading-6 ${
                       status === "error" ? "text-[color:#8e3b31]" : "text-[color:var(--muted)]"
                     }`}
                   >
