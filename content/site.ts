@@ -80,6 +80,39 @@ export type UiCopy = {
     title: string;
     description: string;
   };
+  contact: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    introLabel: string;
+    formLabel: string;
+    intents: Array<{
+      id: "work" | "collaboration" | "hello";
+      title: string;
+      description: string;
+    }>;
+    activeIntentLabel: string;
+    fields: {
+      name: string;
+      email: string;
+      message: string;
+    };
+    placeholders: {
+      name: string;
+      email: string;
+      message: Record<"work" | "collaboration" | "hello", string>;
+    };
+    submit: string;
+    sending: string;
+    success: string;
+    error: string;
+    turnstile: {
+      label: string;
+      expired: string;
+      error: string;
+      missing: string;
+    };
+  };
   resume: {
     eyebrow: string;
     contact: string;
@@ -347,6 +380,56 @@ export const uiCopy: Record<Locale, UiCopy> = {
       title: "Trayectoria técnica",
       description: "Roles que conectan desarrollo web, sistemas, soporte técnico y automatización en contextos reales."
     },
+    contact: {
+      eyebrow: "Contacto",
+      title: "Empecemos con el contexto correcto.",
+      description:
+        "Si ves un punto de conexión, escríbeme. Elige el motivo y envíame un mensaje corto.",
+      introLabel: "Motivo",
+      formLabel: "Mensaje",
+      intents: [
+        {
+          id: "work",
+          title: "Oportunidad laboral",
+          description: "Roles, procesos o conversaciones alrededor de web, sistemas o soporte técnico."
+        },
+        {
+          id: "collaboration",
+          title: "Colaboración",
+          description: "Freelance, proyectos, ideas compartidas o trabajo técnico puntual."
+        },
+        {
+          id: "hello",
+          title: "Saludar",
+          description: "Un mensaje directo, una pregunta o simplemente empezar una conversación."
+        }
+      ],
+      activeIntentLabel: "Has elegido",
+      fields: {
+        name: "Nombre",
+        email: "Email",
+        message: "Mensaje"
+      },
+      placeholders: {
+        name: "Tu nombre",
+        email: "tu@email.com",
+        message: {
+          work: "Cuéntame el rol, el contexto y lo que te ha llamado la atención de mi perfil.",
+          collaboration: "Cuéntame qué estás construyendo, qué necesitas y cómo ves el encaje.",
+          hello: "Escribe con naturalidad. Un mensaje corto es suficiente."
+        }
+      },
+      submit: "Enviar mensaje",
+      sending: "Enviando...",
+      success: "Mensaje enviado. Te responderé por email cuando pueda.",
+      error: "No pude enviar el mensaje. Prueba otra vez en un momento.",
+      turnstile: {
+        label: "Verificación rápida antes de enviar.",
+        expired: "La verificación ha caducado. Vuelve a completarla.",
+        error: "No pude validar la verificación. Inténtalo de nuevo.",
+        missing: "Falta configurar Turnstile en el entorno."
+      }
+    },
     resume: {
       eyebrow: "Curriculum",
       contact: "Contacto",
@@ -400,6 +483,55 @@ export const uiCopy: Record<Locale, UiCopy> = {
       eyebrow: "Experience",
       title: "Technical trajectory",
       description: "Roles connecting web development, systems, technical support, and automation in real-world environments."
+    },
+    contact: {
+      eyebrow: "Contact",
+      title: "Start with the right context.",
+      description: "If something here connects, send a note. Pick the reason and keep it short.",
+      introLabel: "Intent",
+      formLabel: "Message",
+      intents: [
+        {
+          id: "work",
+          title: "Work opportunity",
+          description: "Roles, hiring processes, or conversations around web, systems, or technical support."
+        },
+        {
+          id: "collaboration",
+          title: "Collaboration",
+          description: "Freelance work, projects, shared ideas, or focused technical help."
+        },
+        {
+          id: "hello",
+          title: "Say hi",
+          description: "A direct note, a question, or simply a reason to start a conversation."
+        }
+      ],
+      activeIntentLabel: "You picked",
+      fields: {
+        name: "Name",
+        email: "Email",
+        message: "Message"
+      },
+      placeholders: {
+        name: "Your name",
+        email: "you@email.com",
+        message: {
+          work: "Tell me about the role, the context, and what made you reach out.",
+          collaboration: "Tell me what you are building, what you need, and how you see the fit.",
+          hello: "Keep it simple. A short message is enough."
+        }
+      },
+      submit: "Send message",
+      sending: "Sending...",
+      success: "Message sent. I will get back to you by email when I can.",
+      error: "I could not send the message. Please try again in a moment.",
+      turnstile: {
+        label: "Quick verification before sending.",
+        expired: "The verification expired. Please complete it again.",
+        error: "I could not validate the verification. Please try again.",
+        missing: "Turnstile is not configured in the environment."
+      }
     },
     resume: {
       eyebrow: "Resume",

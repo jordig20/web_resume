@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import Link from "next/link";
 import { Container } from "@/components/container";
+import { ContactSection } from "@/components/contact-section";
 import { ExperienceItem } from "@/components/experience-item";
 import { ProfilePhotoSlider } from "@/components/profile-photo-slider";
 import { ProjectCard } from "@/components/project-card";
@@ -190,6 +191,8 @@ export default async function HomePage({
             </div>
           </Container>
         </section>
+
+        <ContactSection copy={copy.contact} />
       </main>
     </div>
   );
