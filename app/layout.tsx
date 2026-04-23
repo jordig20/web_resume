@@ -7,6 +7,8 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-display"
 });
 
+
+
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
@@ -19,9 +21,25 @@ const ibmPlexMono = IBM_Plex_Mono({
   variable: "--font-ui"
 });
 
-export const metadata: Metadata = {
-  title: "Jordi | Resume & Portfolio",
-  description: "Web resume and portfolio built with Next.js and Tailwind CSS."
+export const metadata = {
+  title: "Jordi | IT Support & Developer",
+  description:
+    "IT Support Specialist & Developer building real-world solutions. From automation and infrastructure to web apps — focused on efficiency, reliability, and clean execution.",
+  openGraph: {
+    title: "Jordi | IT Support & Developer",
+    description:
+      "Building real-world solutions across IT, automation, and development.",
+    url: "https://jordi.is-a.dev",
+    siteName: "Jordi Portfolio",
+    images: [
+      {
+        url: "https://jordi.is-a.dev/jordi-portrait.webp",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: "website",
+  },
 };
 
 export default function RootLayout({
