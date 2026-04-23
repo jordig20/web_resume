@@ -473,7 +473,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
       viewCode: "Code",
       pageTitle: "Projects and experiments",
       pageDescription:
-        "Add or edit projects directly in content/projects.ts. Each entry renders here automatically."
+        "Here I explain what I aimed to achieve, how I solved it, and what results each project delivered, so you can understand how I work in real-world situations."
     },
     skills: {
       eyebrow: "Skills",
